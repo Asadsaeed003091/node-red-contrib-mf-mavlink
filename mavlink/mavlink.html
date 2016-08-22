@@ -7,7 +7,7 @@
         },
         inputs:1,
         outputs:1,
-        icon: "file.png",
+        icon: "drone.png",
         label: function() {
             return this.name||"MAVlink";
         }
@@ -27,7 +27,7 @@
     if the input is a MAVlink buffer, it will output a JSON message accordingly containing all the paramaters you are listening to.
     To set which parameters to listen, you can input a JSON array containing all the messages.
 
-    Message format :
+    To inject some message, use a template node with this message format (You need a JSON converter between the template node and the MAVlink node) :
 
     <pre>
     {
