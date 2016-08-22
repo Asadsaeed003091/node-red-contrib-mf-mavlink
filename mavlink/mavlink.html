@@ -26,5 +26,26 @@
     if the input is JSON, it will output MAVlink style message, that can be sent to UDP, Serial...
     if the input is a MAVlink buffer, it will output a JSON message accordingly containing all the paramaters you are listening to.
     To set which parameters to listen, you can input a JSON array containing all the messages.
+
+    Message format :
+
+    <pre>
+    {
+    "name":"COMMAND_LONG",
+    "parameters":{
+        "target_system" : 1,
+        "target_component" : 0,
+        "command" : 22,
+        "confirmation" : 1,
+        "param1": 1,
+        "param2": "",
+        "param3": "",
+        "param4": 0,
+        "param5": "",
+        "param6": "",
+        "param7": 40
+    }
+    }
+    </pre>
     </p>
 </script>
