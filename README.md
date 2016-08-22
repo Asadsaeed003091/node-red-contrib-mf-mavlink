@@ -1,3 +1,6 @@
-# node-red-contrib-template
+# node-red-contrib-mf-mavlink
 
-A template you can fork to quickly start working on a Node-RED node.
+a node-red node that wraps the node.js MAVlink library to control drones.
+
+see https://github.com/omcaree/node-mavlink
+the mavlink protocol messages http://mavlink.org/messages/common

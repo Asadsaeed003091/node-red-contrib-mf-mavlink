@@ -9,18 +9,22 @@
         outputs:1,
         icon: "file.png",
         label: function() {
-            return this.name||"template-node";
+            return this.name||"MAVlink-node";
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="template-node">
+<script type="text/x-red" data-template-name="MAVlink-node">
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="template-node">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
+<script type="text/x-red" data-help-name="MAVlink-node">
+    <p>A node that convert messages to or from MAVlink protocol
+    if the input is JSON, it will output MAVlink style message, that can be sent to UDP, Serial...
+    if the input is a MAVlink buffer, it will output a JSON message accordingly containing all the paramaters you are listening to.
+    To set which parameters to listen, you can input a JSON array containing all the messages.
+    </p>
 </script>

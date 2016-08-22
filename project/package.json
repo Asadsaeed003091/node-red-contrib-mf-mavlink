@@ -1,7 +1,7 @@
 {
-  "name": "template-example",
+  "name": "mavlink-example",
   "version": "0.0.1",
-  "description": "Node-RED template example project",
+  "description": "Node-RED mavlink example project",
   "dependencies": {
     "node-red": "~0.14.3",
     "node-red-contrib-mf-mavlink": "../"
