@@ -1,8 +1,10 @@
+const mavlink = require('mavlink');
+
 module.exports = function(RED) {
   function MavlinkNode(config) {
     RED.nodes.createNode(this, config);
     var node = this;
-    const mavlink = require('mavlink');
+
     var myMAV = new mavlink(1,1,"v1.0",["common","ardupilotmega"]);
 
     this.on('input', function(msg) {
@@ -25,8 +27,9 @@ module.exports = function(RED) {
 
       myMAV.createMessage(command.name, command.parameters,
         function(mavMessage) {
-          msg.payload = mavMessage;
-          node.send(msg);}
+          msg.payload = mavMessage.buffer;
+          node.send(msg);
+        }
       );
 
     });
