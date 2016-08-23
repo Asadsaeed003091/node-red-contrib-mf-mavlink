@@ -3,7 +3,8 @@
         category: 'function',
         color: '#a6bbcf',
         defaults: {
-            name: {value:""}
+            name: {value:""},
+            version: {value:"v1.0" }
         },
         inputs:1,
         outputs:1,
@@ -19,6 +20,14 @@
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
+    <div class="form-row">
+        <label for="node-input-version" style="width:auto"><i class="icon-tag"></i> MAVlink protocol version</label>
+        <select id="node-input-version">
+          <option select="selected" id="v1.0">v1.0</option>
+          <option id="v0.9">v0.9</option>
+        </select>
+      </div>
+
 </script>
 
 <script type="text/x-red" data-help-name="MAVlink">

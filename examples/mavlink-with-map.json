@@ -1,0 +1,459 @@
+[
+    {
+        "id": "f6f472b.746889",
+        "type": "tab",
+        "label": "Flow 1"
+    },
+    {
+        "id": "82bc179d.be7b08",
+        "type": "template",
+        "z": "f6f472b.746889",
+        "name": "Take off 40 meters",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n    \"name\":\"COMMAND_LONG\",\n    \"parameters\":{\n        \"target_system\" : 1,\n        \"target_component\" : 0,\n        \"command\" : 22,\n        \"confirmation\" : 1,\n        \"param1\": 1,\n        \"param2\": \"\",\n        \"param3\": \"\",\n        \"param4\": 0,\n        \"param5\": \"\",\n        \"param6\": \"\",\n        \"param7\": 40\n    }\n}",
+        "x": 270,
+        "y": 720,
+        "wires": [
+            [
+                "d17218d7.0630a8"
+            ]
+        ]
+    },
+    {
+        "id": "8f36ea91.352618",
+        "type": "inject",
+        "z": "f6f472b.746889",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 90,
+        "y": 720,
+        "wires": [
+            [
+                "82bc179d.be7b08"
+            ]
+        ]
+    },
+    {
+        "id": "d17218d7.0630a8",
+        "type": "json",
+        "z": "f6f472b.746889",
+        "name": "",
+        "x": 510,
+        "y": 640,
+        "wires": [
+            [
+                "482c0517.5c273c"
+            ]
+        ]
+    },
+    {
+        "id": "4bb49c0d.a8ded4",
+        "type": "MAVlink",
+        "z": "f6f472b.746889",
+        "name": "MAVlink decoder",
+        "version": "v1.0",
+        "x": 670,
+        "y": 520,
+        "wires": [
+            [
+                "50b94f2a.82f84"
+            ]
+        ]
+    },
+    {
+        "id": "605f84ae.bba52c",
+        "type": "inject",
+        "z": "f6f472b.746889",
+        "name": "update message listening",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 150,
+        "y": 440,
+        "wires": [
+            [
+                "7cf64192.6e31a"
+            ]
+        ]
+    },
+    {
+        "id": "a0c5e7d4.dc45b8",
+        "type": "udp in",
+        "z": "f6f472b.746889",
+        "name": "",
+        "iface": "",
+        "port": "14552",
+        "ipv": "udp4",
+        "multicast": "false",
+        "group": "",
+        "datatype": "buffer",
+        "x": 460,
+        "y": 440,
+        "wires": [
+            [
+                "4bb49c0d.a8ded4"
+            ]
+        ]
+    },
+    {
+        "id": "50b94f2a.82f84",
+        "type": "switch",
+        "z": "f6f472b.746889",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ATTITUDE",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "GLOBAL_POSITION_INT",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "COMMAND_ACK",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "SYS_STATUS",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "GPS_RAW_INT",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "HEARTBEAT",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 6,
+        "x": 830,
+        "y": 500,
+        "wires": [
+            [
+                "ecb6df49.23a1f"
+            ],
+            [
+                "7d379709.675088",
+                "9c075c73.42656"
+            ],
+            [
+                "c9682b32.b5ae58"
+            ],
+            [
+                "17dcc6cd.80d2f9"
+            ],
+            [
+                "88b3408b.b3f42"
+            ],
+            [
+                "10d28d3a.ebebb3"
+            ]
+        ]
+    },
+    {
+        "id": "7d379709.675088",
+        "type": "debug",
+        "z": "f6f472b.746889",
+        "name": "GLOBAL_POSITION_INT",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 1050,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "4481d318.3cab1c",
+        "type": "json",
+        "z": "f6f472b.746889",
+        "name": "",
+        "x": 450,
+        "y": 520,
+        "wires": [
+            [
+                "4bb49c0d.a8ded4"
+            ]
+        ]
+    },
+    {
+        "id": "7cf64192.6e31a",
+        "type": "template",
+        "z": "f6f472b.746889",
+        "name": "Messages array to listen to",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "[\n\"ATTITUDE\",\n\"MAV_MODE_FLAG\",\n\"MAV_RESULT\",\n\"COMMAND_ACK\",\n\"SYS_STATUS\",\n\"GPS_RAW_INT\",\n\"HEARTBEAT\",\n\"GLOBAL_POSITION_INT\"\n]",
+        "x": 240,
+        "y": 520,
+        "wires": [
+            [
+                "4481d318.3cab1c"
+            ]
+        ]
+    },
+    {
+        "id": "ecb6df49.23a1f",
+        "type": "debug",
+        "z": "f6f472b.746889",
+        "name": "ATTITUDE",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1010,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "c9682b32.b5ae58",
+        "type": "debug",
+        "z": "f6f472b.746889",
+        "name": "ACK",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 990,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "482c0517.5c273c",
+        "type": "MAVlink",
+        "z": "f6f472b.746889",
+        "name": "MAVlink encoder",
+        "version": "v1.0",
+        "x": 670,
+        "y": 640,
+        "wires": [
+            [
+                "bb33fd01.edbcf"
+            ]
+        ]
+    },
+    {
+        "id": "bb33fd01.edbcf",
+        "type": "udp out",
+        "z": "f6f472b.746889",
+        "name": "",
+        "addr": "127.0.0.1",
+        "iface": "",
+        "port": "14550",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "false",
+        "x": 900,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "26aa62f3.9fc88e",
+        "type": "template",
+        "z": "f6f472b.746889",
+        "name": "Arm throttle",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n    \"name\":\"COMMAND_LONG\",\n    \"parameters\":{\n        \"target_system\" : 1,\n        \"target_component\" : 0,\n        \"command\" : 400,\n        \"confirmation\" : 1,\n        \"param1\": 1,\n        \"param2\": \"\",\n        \"param3\": \"\",\n        \"param4\": \"\",\n        \"param5\": \"\",\n        \"param6\": \"\",\n        \"param7\": \"\"\n    }\n}",
+        "x": 250,
+        "y": 680,
+        "wires": [
+            [
+                "d17218d7.0630a8"
+            ]
+        ]
+    },
+    {
+        "id": "b8fbfec.5e053",
+        "type": "inject",
+        "z": "f6f472b.746889",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 90,
+        "y": 680,
+        "wires": [
+            [
+                "26aa62f3.9fc88e"
+            ]
+        ]
+    },
+    {
+        "id": "dff6ebd1.c0a828",
+        "type": "comment",
+        "z": "f6f472b.746889",
+        "name": "HOWTO",
+        "info": "To test this example, start MAVProxy with the following commands for UDP server :\n\n```\n --out=udpin:0.0.0.0:14550 --out=udpout:127.0.0.1:14552\n```\n \nYou may also run the same using SITL simulator with the following commands:\n\n```\n sim_vehicle.py -j4 --map --mavproxy-args --out=udpin:0.0.0.0:14550 --out=udpout:127.0.0.1:14552\n```\n\nConsidering the mode setting, custom modes are in the defines.h file relative to each mode.\nNote that we couldnt currently find a way to change the mode using the non deprecated MAV_CMD_DO_SET_MODE\nFor the copter :\n```\n// Auto Pilot Modes enumeration\nenum control_mode_t {\n    STABILIZE =     0,  // manual airframe angle with manual throttle\n    ACRO =          1,  // manual body-frame angular rate with manual throttle\n    ALT_HOLD =      2,  // manual airframe angle with automatic throttle\n    AUTO =          3,  // fully automatic waypoint control using mission commands\n    GUIDED =        4,  // fully automatic fly to coordinate or fly at velocity/direction using GCS immediate commands\n    LOITER =        5,  // automatic horizontal acceleration with automatic throttle\n    RTL =           6,  // automatic return to launching point\n    CIRCLE =        7,  // automatic circular flight with automatic throttle\n    LAND =          9,  // automatic landing with horizontal position control\n    DRIFT =        11,  // semi-automous position, yaw and throttle control\n    SPORT =        13,  // manual earth-frame angular rate control with manual throttle\n    FLIP =         14,  // automatically flip the vehicle on the roll axis\n    AUTOTUNE =     15,  // automatically tune the vehicle's roll and pitch gains\n    POSHOLD =      16,  // automatic position hold with manual override, with automatic throttle\n    BRAKE =        17,  // full-brake using inertial/GPS system, no pilot input\n    THROW =        18,  // throw to launch mode using inertial/GPS system, no pilot input\n    AVOID_ADSB =   19,  // automatic avoidance of obstacles in the macro scale - e.g. full-sized aircraft\n    GUIDED_NOGPS = 20,  // guided mode but only accepts attitude and altitude\n};\n```",
+        "x": 80,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "edabccb.5548b3",
+        "type": "template",
+        "z": "f6f472b.746889",
+        "name": "Guided Mode (Deprecated)",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n    \"name\":11,\n    \"parameters\":{\n        \"target_system\" : 1,\n        \"base_mode\" : 217,\n        \"custom_mode\" : 4    }\n}\n",
+        "x": 300,
+        "y": 640,
+        "wires": [
+            [
+                "d17218d7.0630a8"
+            ]
+        ]
+    },
+    {
+        "id": "26f22a5a.3a5456",
+        "type": "inject",
+        "z": "f6f472b.746889",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 90,
+        "y": 640,
+        "wires": [
+            [
+                "edabccb.5548b3"
+            ]
+        ]
+    },
+    {
+        "id": "17dcc6cd.80d2f9",
+        "type": "debug",
+        "z": "f6f472b.746889",
+        "name": "SYSTEM STATUS",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 1030,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "88b3408b.b3f42",
+        "type": "debug",
+        "z": "f6f472b.746889",
+        "name": "GPS_RAW_INT",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 1020,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "10d28d3a.ebebb3",
+        "type": "debug",
+        "z": "f6f472b.746889",
+        "name": "HEARTBEAT",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 1010,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "d38516a7.515508",
+        "type": "template",
+        "z": "f6f472b.746889",
+        "name": "RTL Mode (Deprecated)",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n    \"name\":11,\n    \"parameters\":{\n        \"target_system\" : 1,\n        \"base_mode\" : 217,\n        \"custom_mode\" : 6    }\n}\n",
+        "x": 290,
+        "y": 760,
+        "wires": [
+            [
+                "d17218d7.0630a8"
+            ]
+        ]
+    },
+    {
+        "id": "24c230c2.6411c",
+        "type": "inject",
+        "z": "f6f472b.746889",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 90,
+        "y": 760,
+        "wires": [
+            [
+                "d38516a7.515508"
+            ]
+        ]
+    },
+    {
+        "id": "1156b2ed.41db1d",
+        "type": "worldmap",
+        "z": "f6f472b.746889",
+        "lat": "-35.363253",
+        "lon": "149.165242",
+        "zoom": "17",
+        "layer": "Esri Satellite",
+        "cluster": "",
+        "maxage": "",
+        "name": "",
+        "x": 1030,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "9c075c73.42656",
+        "type": "function",
+        "z": "f6f472b.746889",
+        "name": "",
+        "func": "msg.payload.name=\"drone\";\nmsg.payload.lat=msg.payload.lat / 10000000;\nmsg.payload.lon=msg.payload.lon / 10000000;\nconsole.log(msg.payload.lat);\nconsole.log(msg.payload.lon);\nmsg.payload.icon=\"plane\";\nmsg.payload.bearing=\"45\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 830,
+        "y": 240,
+        "wires": [
+            [
+                "1156b2ed.41db1d"
+            ]
+        ]
+    }
+]

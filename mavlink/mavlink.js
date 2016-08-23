@@ -4,7 +4,9 @@ module.exports = function(RED) {
   function MavlinkNode(config) {
     RED.nodes.createNode(this, config);
     var node = this;
-    var myMAV = new mavlink(1,1,"v1.0",["common","ardupilotmega"]);
+    this.version = config.version;
+    //TODO set the version of the protocol in the node...
+    var myMAV = new mavlink(1, 1, this.version, ["common","ardupilotmega"]);
     var messagesListened = []; // a list of message that we want to listen to
 
     this.on('input', function(msg) {
