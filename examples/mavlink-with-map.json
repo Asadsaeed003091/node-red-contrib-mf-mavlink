@@ -143,12 +143,17 @@
                 "t": "eq",
                 "v": "HEARTBEAT",
                 "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "NAV_CONTROLLER_OUTPUT",
+                "vt": "str"
             }
         ],
         "checkall": "true",
-        "outputs": 6,
+        "outputs": 7,
         "x": 830,
-        "y": 500,
+        "y": 460,
         "wires": [
             [
                 "ecb6df49.23a1f"
@@ -168,6 +173,10 @@
             ],
             [
                 "10d28d3a.ebebb3"
+            ],
+            [
+                "d7476574.8fdca8",
+                "45ebc90d.214358"
             ]
         ]
     },
@@ -205,7 +214,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "[\n\"ATTITUDE\",\n\"MAV_MODE_FLAG\",\n\"MAV_RESULT\",\n\"COMMAND_ACK\",\n\"SYS_STATUS\",\n\"GPS_RAW_INT\",\n\"HEARTBEAT\",\n\"GLOBAL_POSITION_INT\"\n]",
+        "template": "[\n\"ATTITUDE\",\n\"MAV_MODE_FLAG\",\n\"MAV_RESULT\",\n\"COMMAND_ACK\",\n\"SYS_STATUS\",\n\"GPS_RAW_INT\",\n\"HEARTBEAT\",\n\"GLOBAL_POSITION_INT\",\n\"NAV_CONTROLLER_OUTPUT\"\n]",
         "x": 240,
         "y": 520,
         "wires": [
@@ -219,7 +228,7 @@
         "type": "debug",
         "z": "f6f472b.746889",
         "name": "ATTITUDE",
-        "active": true,
+        "active": false,
         "console": "false",
         "complete": "payload",
         "x": 1010,
@@ -444,16 +453,42 @@
         "id": "9c075c73.42656",
         "type": "function",
         "z": "f6f472b.746889",
-        "name": "",
-        "func": "msg.payload.name=\"drone\";\nmsg.payload.lat=msg.payload.lat / 10000000;\nmsg.payload.lon=msg.payload.lon / 10000000;\nconsole.log(msg.payload.lat);\nconsole.log(msg.payload.lon);\nmsg.payload.icon=\"plane\";\nmsg.payload.bearing=\"45\";\nreturn msg;",
+        "name": "ManageMap",
+        "func": "msg.payload.name=\"drone\";\nmsg.payload.lat=msg.payload.lat / 10000000;\nmsg.payload.lon=msg.payload.lon / 10000000;\nconsole.log(msg.payload.lat);\nconsole.log(msg.payload.lon);\nmsg.payload.icon=\"plane\";\nmsg.payload.command = {};\nmsg.payload.command.lat = msg.payload.lat;\nmsg.payload.command.lon = msg.payload.lon;\nmsg.payload.bearing=flow.get(\"bearing\");\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 830,
+        "x": 850,
         "y": 240,
         "wires": [
             [
                 "1156b2ed.41db1d"
             ]
+        ]
+    },
+    {
+        "id": "d7476574.8fdca8",
+        "type": "debug",
+        "z": "f6f472b.746889",
+        "name": "NAV_CONTROLLER_OUTPUT",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1070,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "45ebc90d.214358",
+        "type": "function",
+        "z": "f6f472b.746889",
+        "name": "update bearing",
+        "func": "flow.set(\"bearing\",msg.payload.nav_bearing);\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 800,
+        "y": 200,
+        "wires": [
+            []
         ]
     }
 ]
