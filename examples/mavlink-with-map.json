@@ -148,10 +148,20 @@
                 "t": "eq",
                 "v": "NAV_CONTROLLER_OUTPUT",
                 "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "MISSION_ACK",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "MAV_CMD_NAV_WAYPOINT",
+                "vt": "str"
             }
         ],
         "checkall": "true",
-        "outputs": 7,
+        "outputs": 9,
         "x": 830,
         "y": 460,
         "wires": [
@@ -177,6 +187,12 @@
             [
                 "d7476574.8fdca8",
                 "45ebc90d.214358"
+            ],
+            [
+                "56efdc78.13baa4"
+            ],
+            [
+                "a12e729d.1017"
             ]
         ]
     },
@@ -209,13 +225,13 @@
         "id": "7cf64192.6e31a",
         "type": "template",
         "z": "f6f472b.746889",
-        "name": "Messages array to listen to",
+        "name": "Messages array",
         "field": "payload",
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "[\n\"ATTITUDE\",\n\"MAV_MODE_FLAG\",\n\"MAV_RESULT\",\n\"COMMAND_ACK\",\n\"SYS_STATUS\",\n\"GPS_RAW_INT\",\n\"HEARTBEAT\",\n\"GLOBAL_POSITION_INT\",\n\"NAV_CONTROLLER_OUTPUT\"\n]",
-        "x": 240,
+        "template": "[\n\"ATTITUDE\",\n\"MAV_MODE_FLAG\",\n\"MAV_RESULT\",\n\"COMMAND_ACK\",\n\"SYS_STATUS\",\n\"GPS_RAW_INT\",\n\"HEARTBEAT\",\n\"GLOBAL_POSITION_INT\",\n\"NAV_CONTROLLER_OUTPUT\",\n\"MISSION_ACK\",\n\"MAV_CMD_NAV_WAYPOINT\"\n]",
+        "x": 280,
         "y": 520,
         "wires": [
             [
@@ -240,7 +256,7 @@
         "type": "debug",
         "z": "f6f472b.746889",
         "name": "ACK",
-        "active": false,
+        "active": true,
         "console": "false",
         "complete": "true",
         "x": 990,
@@ -408,7 +424,7 @@
         "syntax": "mustache",
         "template": "{\n    \"name\":11,\n    \"parameters\":{\n        \"target_system\" : 1,\n        \"base_mode\" : 217,\n        \"custom_mode\" : 6    }\n}\n",
         "x": 290,
-        "y": 760,
+        "y": 800,
         "wires": [
             [
                 "d17218d7.0630a8"
@@ -427,7 +443,7 @@
         "crontab": "",
         "once": false,
         "x": 90,
-        "y": 760,
+        "y": 800,
         "wires": [
             [
                 "d38516a7.515508"
@@ -470,7 +486,7 @@
         "type": "debug",
         "z": "f6f472b.746889",
         "name": "NAV_CONTROLLER_OUTPUT",
-        "active": true,
+        "active": false,
         "console": "false",
         "complete": "payload",
         "x": 1070,
@@ -490,5 +506,76 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "87890bfa.4a5f78",
+        "type": "template",
+        "z": "f6f472b.746889",
+        "name": "Navigate To -35 149 200",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "mustache",
+        "template": "{\n    \"name\":\"COMMAND_LONG\",\n    \"parameters\":{\n        \"target_system\" : 255,\n        \"target_component\" : 0,\n        \"command\" : 16,\n        \"confirmation\" : 0,\n        \"param1\": 0,\n        \"param2\": 0,\n        \"param3\": 0,\n        \"param4\": 0,\n        \"param5\": -35,\n        \"param6\": 149,\n        \"param7\": 200\n    }\n}",
+        "x": 290,
+        "y": 760,
+        "wires": [
+            [
+                "d17218d7.0630a8"
+            ]
+        ]
+    },
+    {
+        "id": "25ff73c2.2b6cfc",
+        "type": "inject",
+        "z": "f6f472b.746889",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 90,
+        "y": 760,
+        "wires": [
+            [
+                "87890bfa.4a5f78"
+            ]
+        ]
+    },
+    {
+        "id": "56efdc78.13baa4",
+        "type": "debug",
+        "z": "f6f472b.746889",
+        "name": "MISSION_ACK",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1020,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "a12e729d.1017",
+        "type": "debug",
+        "z": "f6f472b.746889",
+        "name": "MAV_CMD_NAV_WAYPOINT",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1040,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "ca415efe.97ddc",
+        "type": "comment",
+        "z": "f6f472b.746889",
+        "name": "TODO",
+        "info": "find a way to navigate to a specific lat long.\ncommand in mavproxy :\n\nguided -35 149 100",
+        "x": 350,
+        "y": 760,
+        "wires": []
     }
 ]
