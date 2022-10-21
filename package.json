@@ -1,21 +1,25 @@
 {
-  "name": "node-red-contrib-mf-mavlink",
-  "version": "0.0.1",
-  "description": "A MAVLink converter for Node-RED",
-  "dependencies": {
-    "mavlink": "1.0.1",
-    "npm-pack-all": "^1.12.7"
+  "name": "mavlink",
+  "version": "1.0.1",
+  "description": "Encode and decode MAVLink messages",
+  "main": "src/mavlink.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Asadsaeed003091/node-red-contrib-mf-mavlink.git"
+    "url": "https://github.com/Asadsaeed003091/nodejs1-mavlink.git"
   },
   "keywords": [
-    "node-red"
+    "node.js",
+    "mavlink"
   ],
-  "node-red": {
-    "nodes": {
-      "mavlink": "mavlink/mavlink.js"
-    }
-  }
+  "dependencies": {
+    "serialport": "^10.4.0",
+    "xml2js": ""
+  },
+  "author": "Owen McAree",
+  "license": "BSD",
+  "readmeFilename": "Readme.md",
+  "gitHead": "c30f8a63ca6a1ebc1669fefcd07bb3780540e41b"
 }
