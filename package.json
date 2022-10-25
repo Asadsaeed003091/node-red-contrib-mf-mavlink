@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A MAVLink converter for Node-RED",
   "dependencies": {
-    "mavlink": "1.0.1",
+    "mavlink": "^1.0.1",
     "serialport": "^10.4.0"
   },
   "repository": {
