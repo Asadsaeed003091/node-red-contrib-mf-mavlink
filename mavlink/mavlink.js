@@ -1,4 +1,4 @@
-const mavlink = require('mavlink');
+var mavlink = require('mavlink');
 
 module.exports = function(RED) {
   function MavlinkNode(config) {
