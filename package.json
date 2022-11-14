@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "description": "A MAVLink converter for Node-RED",
   "dependencies": {
-    "mavlink": "^1.0.1",
+    "mavlink": "1.0.1",
     "serialport": "^10.4.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Asadsaeed003091/node-red-contrib-mf-mavlink.git"
+    "url": "https://github.com/MomentFactory/node-red-contrib-mf-mavlink.git"
   },
   "keywords": [
     "node-red"
